@@ -54,7 +54,7 @@ Loot represents potentially valuable information, as defined by our clues. Loot 
 
 ## Maps
 
-A map is how we know how to communicate with the api. It needs to be able to fetch information about a user, an organization, and a repository based on a given string. It implements the following:
+A map is how we know how to communicate with the api. It needs to be able to fetch information about a user, an organization, and a repository based on a given string. A map also handles cycling out API keys when rate limits are hit. It implements the following:
 - getUser(self, username)
 - getOrganization(self, orgName)
 - getRepository(self, repoName)
