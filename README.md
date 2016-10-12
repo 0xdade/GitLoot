@@ -16,6 +16,7 @@ Things I cared about in my new implementation:
 - Whole API analysis
 	- An easy way to automatically analyze the entire contents of an API. This is primarily useful for enterprise github installations.
 
+
 ## Clues
 
 A clue is how you define the types of information you want to look for. A clue is a json file indicates the following:
@@ -46,6 +47,10 @@ A crate is how we store our findings. It implements the following:
 - addLoot(self, loot)
 
 
+## Loot
+
+Loot represents potentially valuable information, as defined by our clues.
+
 ## Maps
 
 A map is how we know how to communicate with the api. It implements the following:
@@ -54,6 +59,16 @@ A map is how we know how to communicate with the api. It implements the followin
 - getRepository(self, repoName)
 
 
+## Metal Detector
+
+The metal detector inspects commit objects, looking for clues. If it finds clues, it creates loot and puts it in a crate.
+
+
 ## Models
 
 A model is an object that represents data to be stored in a crate. 
+
+
+## Shovels
+
+A shovel is how we interact with a repository, iterating through commits and passing them to the metal detector. My initial plan is only to support git, however I'm designing it to (more) easily expand to other repo types if desirable.
