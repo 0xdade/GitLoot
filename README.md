@@ -2,7 +2,7 @@
 
 This tool began as a red team project to simply automate gitrob against our enterprise Github installation so that we could broadly scan to find potentially valuable information. After a bit of work, I had built an automated tool that collects a list of all users and organizations and passes them along to gitrob for the actual analysis. But when I finished this, I noticed several issues I was having with gitrob during the analysis stage, and the web app simply crumbled under the weight of the number of repositories we were assessing. Gitrob hasn't seen an update in six months, and I don't really enjoy writing ruby, so I decided I'd start my own implementation.
 
-Things I cared about in my new implementation:
+## Design goals:
 - Extensibility. 
 	- I want to be able to add new ways to store the data, and new ways to collect the data, with relative ease.
 - Historical analysis. 
@@ -19,7 +19,7 @@ Things I cared about in my new implementation:
 
 ## Clues
 
-A clue is how you define the types of information you want to look for. A clue is a json file indicates the following:
+A clue is how you define the types of information you want to look for. Clues get used by the metal detector to scan commits. A clue is a json file indicates the following:
 - Part of the file to look at
 	- Extension
 	- Filename
@@ -40,7 +40,7 @@ I'm using this design so that you can import existing signatures from [gitrob](h
 
 ## Crates
 
-A crate is how we store our findings. It implements the following:
+A crate is how we store our findings. It needs to be able to accept users, organizations, repositories, and loot. It implements the following:
 - addUser(self, user)
 - addOrganization(self, org)
 - addRepository(self, repo)
@@ -49,11 +49,11 @@ A crate is how we store our findings. It implements the following:
 
 ## Loot
 
-Loot represents potentially valuable information, as defined by our clues.
+Loot represents potentially valuable information, as defined by our clues. Loot is created by the metal detector and then passed to a crate.
 
 ## Maps
 
-A map is how we know how to communicate with the api. It implements the following:
+A map is how we know how to communicate with the api. It needs to be able to fetch information about a user, an organization, and a repository based on a given string. It implements the following:
 - getUser(self, username)
 - getOrganization(self, orgName)
 - getRepository(self, repoName)
@@ -66,9 +66,9 @@ The metal detector inspects commit objects, looking for clues. If it finds clues
 
 ## Models
 
-A model is an object that represents data to be stored in a crate. 
+Models represent entities which we act upon to store and move data around the application.
 
 
 ## Shovels
 
-A shovel is how we interact with a repository, iterating through commits and passing them to the metal detector. My initial plan is only to support git, however I'm designing it to (more) easily expand to other repo types if desirable.
+A shovel is how we interact with a repository, iterating through commits and passing them to the metal detector. It takes a repository model at initialization and clones the repo locally. It creates commit objects to be passed to the metal detector. My initial plan is only to support git, however I'm designing it to (more) easily expand to other repo types if desirable.
