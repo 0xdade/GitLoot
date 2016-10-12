@@ -16,10 +16,6 @@ Things I cared about in my new implementation:
 - Whole API analysis
 	- An easy way to automatically analyze the entire contents of an API. This is primarily useful for enterprise github installations.
 
-One thing that I thought about when I decided I was going to build my own version was about the ability to expand out onto other APIs and different storage mechanisms with relative ease. I also wanted to be able to scan the history of a repo to see if any sensitive information was stored in past commits that wasn't properly stripped. Even if they aren't valid credentials anymore, it may give us other interesting information.
-
-I also wanted it to be able to regularly monitor our targets. Combining this with the ability to analyze the historical commits meant that we'd also need to keep track of the most recent commit we analyzed for a given repo. We're also going to clone the repo locally and do our analysis locally as opposed to doing it via a ton of api requests, so we need to be able to delete the repo when we're done analyzing it (with an option to save all the repos locally, if you have enough storage for it).
-
 ## Clues
 
 A clue is how you define the types of information you want to look for. A clue is a json file indicates the following:
