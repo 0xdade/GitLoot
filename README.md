@@ -37,6 +37,7 @@ A clue is how you define the types of information you want to look for. A clue i
 	- Short description of what this clue looks for
 - Description
 	- Why you are looking for this clue
+	
 I'm using this design so that you can import existing signatures from [gitrob](https://github.com/michenriksen/gitrob/blob/master/signatures.json)
 
 
