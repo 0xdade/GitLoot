@@ -7,6 +7,7 @@ This tool began as a red team project to simply automate gitrob against our ente
 	- I want to be able to add new ways to store the data, and new ways to collect the data, with relative ease.
 - Historical analysis. 
 	- I want to be able to scan previous commit objects for potentially sensitive information leaks.
+	- An option to "Quickscan" and only look at the repo HEAD, for faster scans.
 - Recurring analysis. 
 	- I want to regularly (and automatically) followup on repositories that I've been targeting. 
 	- An option to set the update interval
