@@ -1,4 +1,4 @@
-# GitTreasure
+# GitLoot
 
 This tool began as a red team project to simply automate gitrob against our enterprise Github installation so that we could broadly scan to find potentially valuable information. After a bit of work, I had built an automated tool that collects a list of all users and organizations and passes them along to gitrob for the actual analysis. But when I finished this, I noticed several issues I was having with gitrob during the analysis stage, and the web app simply crumbled under the weight of the number of repositories we were assessing. Gitrob hasn't seen an update in six months, and I don't really enjoy writing ruby, so I decided I'd start my own implementation.
 
