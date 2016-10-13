@@ -23,3 +23,11 @@ class Crate:
 	def addLoot(self, loot):
 		self._crate.addLoot(loot)
 		return 0
+
+	def addJob(self,job):
+		self._crate.addJob(job)
+		return
+
+	def finishJob(self,job):
+		self._crate.finishJob(job)
+		return

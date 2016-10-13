@@ -24,3 +24,11 @@ class MySQLCrate:
 	def addLoot(self, loot):
 		#add loot to the loot table
 		return 0
+
+	def addJob(self,job):
+		#add job to a jobs table.
+		return
+
+	def finishJob(self,job):
+		# This job is finished, let's update the record and set a finish time, create a new job w/ start time = finishTime + rescanInterval
+		return
