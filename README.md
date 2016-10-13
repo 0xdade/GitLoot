@@ -70,6 +70,11 @@ The metal detector inspects commit objects, looking for clues. If it finds clues
 Models represent entities which we act upon to store and move data around the application.
 
 
+## Prospector
+
+The prospector handles the job queue, dispatching jobs for processing as they are ready. 
+
+
 ## Shovels
 
 A shovel is how we interact with a repository, iterating through commits and passing them to the metal detector. It takes a repository model at initialization and clones the repo locally. It creates commit objects to be passed to the metal detector. My initial plan is only to support git, however I'm designing it to (more) easily expand to other repo types if desirable.
