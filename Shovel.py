@@ -1,0 +1,1 @@
+# Shovel abstraction allows us to interact with shovels without caring about the type of repository.

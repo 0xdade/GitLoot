@@ -1,0 +1,128 @@
+[
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "pem",
+		"caption": "Potential cryptographic private key",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "regex",
+		"pattern": "\\Akey(pair)?\\z",
+		"caption": "Potential cryptographic private key",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "pkcs12",
+		"caption": "Potential cryptographic key bundle",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "pfx",
+		"caption": "Potential cryptographic key bundle",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "p12",
+		"caption": "Potential cryptographic key bundle",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "asc",
+		"caption": "Potential cryptographic key bundle",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "ovpn",
+		"caption": "OpenVPN client configuration file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "kdb",
+		"caption": "KeePass password manager database file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "agilekeychain",
+		"caption": "1Password password manager database file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "keychain",
+		"caption": "Apple Keychain database file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "regex",
+		"pattern": "\\Akey(store|ring)\\z",
+		"caption": "GNOME Keyring database file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "log",
+		"caption": "Log file",
+		"description": "Log files might contain information such as references to secret HTTP endpoints, session IDs, user information, passwords and API keys."
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "pcap",
+		"caption": "Network traffic capture file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "regex",
+		"pattern": "\\Asql(dump)?\\z",
+		"caption": "SQL dump file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "gnucash",
+		"caption": "GnuCash database file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "kwallet",
+		"caption": "KDE Wallet Manager database file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "tblk",
+		"caption": "Tunnelblick VPN configuration file",
+		"description": null
+	},
+	{
+		"part": "extension",
+		"type": "match",
+		"pattern": "dayone",
+		"caption": "Day One journal file",
+		"description": null
+	}
+]

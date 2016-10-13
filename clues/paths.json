@@ -1,0 +1,59 @@
+[
+	{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?ssh/config\\z",
+		"caption": "SSH configuration file",
+		"description": null
+	},
+	{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?purple\\/accounts\\.xml\\z",
+		"caption": "Pidgin chat client account configuration file",
+		"description": null
+	},
+	{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?xchat2?\\/servlist_?\\.conf\\z",
+		"caption": "Hexchat/XChat IRC client server list configuration file",
+		"description": null
+	},
+	{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?irssi\\/config\\z",
+		"caption": "Irssi IRC client configuration file",
+		"description": null
+	},
+	{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?recon-ng\\/keys\\.db\\z",
+		"caption": "Recon-ng web reconnaissance framework API key database",
+		"description": null
+	},
+	
+	{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?aws/credentials\\z",
+		"caption": "AWS CLI credentials file",
+		"description": null
+	},
+	{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?gem/credentials\\z",
+		"caption": "Rubygems credentials file",
+		"description": "Might contain API key for a rubygems.org account."
+	},
+		{
+		"part": "path",
+		"type": "regex",
+		"pattern": "\\.?chef/(.*)\\.pem\\z",
+		"caption": "Chef private key",
+		"description": "Can be used to authenticate against Chef servers"
+	}
+]
