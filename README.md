@@ -25,12 +25,14 @@ A clue is how you define the types of information you want to look for. Clues ge
 	- Extension
 	- Filename
 	- Content
+	- Path
+	- Commit Message
 - Type of matching to do
 	- Match
 	- regex
 - Pattern
 	- Exact match on filename or extension
-	- Regex match on extension, filename, or content
+	- Regex match on extension, filename, content, commit message
 - Caption
 	- Short description of what this clue looks for
 - Description
