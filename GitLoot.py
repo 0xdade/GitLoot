@@ -1,5 +1,7 @@
 from ConfigParser import ConfigParser
 import argparse
+import Map
+#from models import *
 
 PROG_NAME = "GitLoot"
 PROG_VER = 0.1
@@ -29,14 +31,19 @@ def parseArgs():
 	return args
 
 def main():
-	loadConfig()
+	#loadConfig()
 	# We load the config first, and then read command line options. Command line can override options from the config at runtime.
-	args = parseArgs()
-	if args.job_subject:
+	#args = parseArgs()
+	#if args.job_subject:
 		#We need to add a job to the jobs crate so the prospector can find it.
 
-
-	print "I guess we're done here. . ."
+	
+	gh = Map.Map('github')
+	user = gh.getUser('0xdade')
+	org = gh.getOrganization('b0tchsec')
+	repo = gh.getRepository('0xdade', 'GitLoot')
+	print str(user) + "\n" + str(org) + "\n" + str(repo)
+	#print "I guess we're done here. . ."
 	
 
 
