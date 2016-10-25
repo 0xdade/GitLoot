@@ -12,6 +12,10 @@ class User:
 		self.reposUrl = json['repos_url']
 		self.created_at = json['created_at']
 		self.updated_at = json['updated_at']
+		self.repos = {}
 
 	def __str__(self):
-		return "User: " + str(self.id) + ", " + str(self.login) + ", " + str(self.repoCount)
+		repoList = ""
+		for repo in self.repos:
+			repoList += str(repo) + ","
+		return "User: " + str(self.id) + ", " + str(self.login) + ", " + str(self.repoCount) + "\nRepos: " + repoList[:-1]

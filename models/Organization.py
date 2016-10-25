@@ -10,9 +10,13 @@ class Organization:
 		self.url = json['url']
 		self.reposUrl = json['repos_url']
 		self.members = {}
+		self.repos = {}
 
 	def __str__(self):
 		memberList = ""
+		repoList = ""
 		for member in self.members:
 			memberList += str(member) + ","
-		return "Organization: " + str(self.id) + ", " + str(self.login) + "\n\tMembers: " + memberList[:-1]
+		for repo in self.repos:
+			repoList += str(repo) + ","
+		return "Organization: " + str(self.id) + ", " + str(self.login) + "\nMembers: " + memberList[:-1] + "\nRepos: " + repoList[:-1]
