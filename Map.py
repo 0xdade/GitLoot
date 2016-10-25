@@ -10,11 +10,11 @@ class Map:
 	def getUser(self, user):
 		return self._map.getUser(user)
 
+	def getUsers(self):
+		return self._map.getUsers()
+
 	def getOrganization(self, orgName):
 		return self._map.getOrganization(orgName)
-
-	def getOrganizationMembers(self,orgName):
-		return self._map.getOrganizationMembers(orgName)
 
 	def getRepository(self, owner, repo):
 		return self._map.getRepository(owner, repo)
