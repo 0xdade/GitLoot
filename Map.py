@@ -16,5 +16,5 @@ class Map:
 	def getOrganization(self, orgName):
 		return self._map.getOrganization(orgName)
 
-	def getRepository(self, owner, repo):
-		return self._map.getRepository(owner, repo)
+	def getRepository(self, full_name):
+		return self._map.getRepository(full_name)

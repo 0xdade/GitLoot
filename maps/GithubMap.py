@@ -14,7 +14,7 @@ class GithubMap:
 		self.GET_USERS = self.API_ROOT + "users"
 		self.GET_ORG = self.API_ROOT + "orgs/"
 		self.GET_REPO = self.API_ROOT + "repos/"
-		self.TOKENS = ["494e7e43eb9ced4b2116b4cc68f0621ea531c802", "d3cebe1bb0960a3d8baf1ed73e278045e1d9fee4"]
+		self.TOKENS = []
 		self.current_token = 1
 		self.HEADERS = {'user-agent': '0xdade/GitLoot', 'Authorization': "token %s" % self.TOKENS[self.current_token]}
 		return
@@ -34,54 +34,64 @@ class GithubMap:
 
 	def switchTokens(self):
 		# switch to a new token
-		if self.CURRENT_TOKEN == len(self.TOKENS):
-			self.CURRENT_TOKEN = 1
-		elif self.CURRENT_TOKEN < len(self.TOKENS):
-			self.CURRENT_TOKEN += 1
+		if self.current_token == len(self.TOKENS):
+			self.current_token = 1
+		elif self.current_token < len(self.TOKENS):
+			self.current_token += 1
+		self.HEADERS['Authorization'] = "token %s" % self.TOKENS[self.current_token-1]
 		return
 
 	def makeRequest(self, entity):
 		r = requests.get(entity, headers=self.HEADERS)
-		if (r.headers['X-RateLimit-Remaining'] < 10):
+		if (int(r.headers['X-RateLimit-Remaining']) < 4950):
 			self.switchTokens()
 		if (r.status_code == 200):
 			return r
 		else:
 			raise SystemExit(str(r.status_code) + ": Seems we've lost the way, sir.")
 
-	def getUser(self, user):
+	def getUser(self, uname):
 		# API call to fetch user
-		r = self.makeRequest(self.GET_USER + user)
-		if (r.status_code == 200):
-			user = User(r.json())
-			return user
-		else:
-			return r.status_code
+		r = self.makeRequest(self.GET_USER + uname)
+		user = User(r.json())
+		user.repos = self.getUserRepos(user)
+		return user
+
+	def getUserRepos(self, user):
+		# Pending multipage handling
+		repos = {}
+		r = self.makeRequest(user.reposUrl)
+		for repo in r.json():
+			repos[repo['id']] = repo['full_name']
+		return repos
+
+	def getOrgRepos(self, org):
+		# Pending multipage handling
+		repos = {}
+		r = self.makeRequest(org.reposUrl)
+		for repo in r.json():
+			repos[repo['id']] = repo['full_name']
+		return repos
 
 	def getOrganization(self, orgName):
 		# API call to fetch organization
 		r = self.makeRequest(self.GET_ORG + orgName)
-		if (r.status_code == 200):
-			org = Organization(r.json())
-			org.members = self.getOrganizationMembers(orgName)
-			return org
-		else:
-			return r.status_code
+		org = Organization(r.json())
+		org.members = self.getOrganizationMembers(orgName)
+		org.repos = self.getOrgRepos(org)
+		return org
 
 	def getOrganizationMembers(self,orgName):
 		# API call to fetch list of public members of organization
+		# Pending multipage handling
 		members = {}
 		r = self.makeRequest(self.GET_ORG + orgName + "/public_members")
-		if (r.status_code == 200):
-			for member in r.json():
-				members[member['id']] = self.getUser(member['login'])
+		for member in r.json():
+			members[member['id']] = member['login']
 		return members
 
-	def getRepository(self, owner, repo):
+	def getRepository(self, full_name):
 		# API call to fetch repository
-		r = self.makeRequest(self.GET_REPO + owner + "/" + repo)
-		if (r.status_code == 200):
-			repo = Repository(r.json())
-			return repo
-		else:
-			return r.status_code
+		r = self.makeRequest(self.GET_REPO + full_name)
+		repo = Repository(r.json())
+		return repo
