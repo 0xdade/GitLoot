@@ -35,13 +35,18 @@ def main():
 
 	
 	gh = Map.Map('github')
-	while True:
-		user = gh.getUser('0xdade')
+	org = gh.getOrganization('b0tchsec')
+	print str(org) + "\n"
+	for rid,full_name in org.getRepos():
+		repo = gh.getRepository(full_name)
+		print str(repo) + "\n"		
+	
+	for uid,login in org.getMembers():
+		user = gh.getUser(login)
 		print str(user) + "\n"
-		org = gh.getOrganization('b0tchsec')
-		print str(org) + "\n"
-		repo = gh.getRepository('0xdade/GitLoot')
-		print str(repo) + "\n"
+		for rid,full_name in user.getRepos():
+			repo = gh.getRepository(full_name)
+			print str(repo) + "\n"
 	#gh.getUsers()
 	#print "I guess we're done here. . ."
 	
