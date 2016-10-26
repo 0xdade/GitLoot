@@ -10,8 +10,6 @@ class User:
 		self.repoCount = json['public_repos']
 		self.url = json['url']
 		self.reposUrl = json['repos_url']
-		self.created_at = json['created_at']
-		self.updated_at = json['updated_at']
 		self.repos = {}
 
 	def __str__(self):
