@@ -8,7 +8,6 @@
 
 # Set persistent information in config
 # including default api, crate type, database credentials if applicable, lists of api keys, update interval
-import pip
 
 class Setup:
 
@@ -30,7 +29,12 @@ class Setup:
 
 	def setupDependencies(self):
 		# pip install the requirements.txt file
-		pip.main(['install', '-r', 'requirements.txt'])
+		try:
+			import pip
+			pip.main(['install', '-r', 'requirements.txt'])
+		except ImportError:
+			print "Please install pip to continue. . ."
+			raise SystemExit(1)
 		return
 
 def main():
