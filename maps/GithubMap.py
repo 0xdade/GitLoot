@@ -1,27 +1,43 @@
 # Github api calls for common tasks
 import requests
-import re
-from requests_oauthlib import OAuth1
+import os
+from ConfigParser import ConfigParser
 from models import Organization, Repository, User
-class GithubMap:
+class GithubMap(object):
 	
 	def __init__(self, config=None):
 		if config:
 			self.CONFIG_FILE = config
+		else:
+			self.CONFIG_FILE = None
 		self.next = ""
-		self.API_ROOT = r"https://api.github.com/" # We'll load this from config later
+		self.API_ROOT = r"https://api.github.com/" # default api_root
 		self.GET_USER = self.API_ROOT + "users/"
 		self.GET_USERS = self.API_ROOT + "users"
 		self.GET_ORG = self.API_ROOT + "orgs/"
 		self.GET_REPO = self.API_ROOT + "repos/"
 		self.TOKENS = []
-		self.current_token = 1
-		self.HEADERS = {'user-agent': '0xdade/GitLoot', 'Authorization': "token %s" % self.TOKENS[self.current_token]}
+		self.current_token = 0
+		self.user_agent = "0xdade/GitLoot" # Default user_agent
+		self.loadSettings()
+		self.HEADERS = {'user-agent': self.user_agent, 'Authorization': "token %s" % self.TOKENS[self.current_token]}
 		return
 
 	def loadSettings(self):
 		# Load settings from config file
-		# Options include API_ROOT, TOKENS, user-agent
+		config = ConfigParser()
+		if self.CONFIG_FILE:
+			config.read(self.CONFIG_FILE)
+		else:
+			if not config.read(os.path.expanduser('~') + "/.gitloot"):
+				raise IOError, "cannot load ~/.gitloot"
+		confDict = dict(config.items(self.__class__.__name__))
+		if (confDict['api_root']):
+			self.API_ROOT = confDict['api_root']
+		if (confDict['user-agent']):
+			self.user_agent = confDict['user-agent']
+		if (confDict['api_tokens']):
+			self.TOKENS = confDict['api_tokens'].strip("\"").split(",")
 		return
 
 	def getUsers(self):
@@ -34,16 +50,16 @@ class GithubMap:
 
 	def switchTokens(self):
 		# switch to a new token
-		if self.current_token == len(self.TOKENS):
-			self.current_token = 1
+		if self.current_token == len(self.TOKENS)-1:
+			self.current_token = 0
 		elif self.current_token < len(self.TOKENS):
 			self.current_token += 1
-		self.HEADERS['Authorization'] = "token %s" % self.TOKENS[self.current_token-1]
+		self.HEADERS['Authorization'] = "token %s" % self.TOKENS[self.current_token]
 		return
 
 	def makeRequest(self, entity):
 		r = requests.get(entity, headers=self.HEADERS)
-		if (int(r.headers['X-RateLimit-Remaining']) < 4950):
+		if (int(r.headers['X-RateLimit-Remaining']) < 10):
 			self.switchTokens()
 		if (r.status_code == 200):
 			return r
