@@ -19,3 +19,6 @@ class User:
 		for repo in self.repos:
 			repoList += str(repo) + ","
 		return "User: " + str(self.id) + ", " + str(self.login) + ", " + str(self.repoCount) + "\nRepos: " + repoList[:-1]
+
+	def getRepos(self):
+		return self.repos.items()

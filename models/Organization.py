@@ -20,3 +20,9 @@ class Organization:
 		for repo in self.repos:
 			repoList += str(repo) + ","
 		return "Organization: " + str(self.id) + ", " + str(self.login) + "\nMembers: " + memberList[:-1] + "\nRepos: " + repoList[:-1]
+
+	def getMembers(self):
+		return self.members.items()
+
+	def getRepos(self):
+		return self.repos.items()
