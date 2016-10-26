@@ -17,16 +17,20 @@ class Setup:
 		# Do all the setup on setup instantiation
 		self.setupDependencies()
 		self.setupConfig()
-		self.setupCrate("MySQL")
+		self.setupCrate()
 		return
+	def printHeader(self, text):
+		print ("#"*10) + "\n" + text + "\n" + ("#"* 10)
 
-	def setupCrate(self, crateType):
+	def setupCrate(self):
 		# initialize the crate matching crateType
+		self.printHeader("CRATE SETUP")
 		return
 
 	def setupConfig(self):
 		# Ask the user for details about how they are going to run the tool
 		# Save this to ~/.gitloot
+		self.printHeader("CONFIG FILE")
 		print "What type of API is this? (github)"
 		api_type = raw_input("API Type: ")
 		print "Please let us know the root of the API that we'll be running against."
@@ -41,7 +45,10 @@ class Setup:
 		import os
 		configFile = os.path.expanduser('~') + "/.gitloot"
 
-		if api_type == "github":
+		if api_type.lower() == "github":
+			confHeader = "[GithubMap]\n"
+		else:
+			print "We only support github APIs right now."
 			confHeader = "[GithubMap]\n"
 		with open(configFile, 'w+') as conf:
 			conf.write(confHeader + "api_root=\"" + api_root + "\"\napi_tokens=\"" + api_tokens + "\"\nuser-agent=\"" + user_agent + "\"\n")
@@ -51,6 +58,7 @@ class Setup:
 		# pip install the requirements.txt file
 		try:
 			import pip
+			self.printHeader("DEPENDENCIES")
 			pip.main(['install', '-r', 'requirements.txt'])
 		except ImportError:
 			print "Please install pip to continue. . ."
