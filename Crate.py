@@ -3,11 +3,13 @@ import crates
 class Crate:
 
 	def __init__(self, crateType):
-		if crateType.lower() == "file":
-			self._crate = crates.FileCrate()
-		else if crateType.lower() == "mysql":
-			self._crate = crates.MySQLCrate()
-		
+		#if crateType.lower() == "file":
+		#	self._crate = crates.FileCrate()
+		if crateType.lower() == "sql":
+			self._crate = crates.SQLCrate()
+		else:
+			return -1
+			
 	def addUser(self, user):
 		self._crate.addUser(user)
 		return 0
