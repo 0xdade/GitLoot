@@ -4,6 +4,7 @@ class Repository:
 	def __init__(self, json):
 		self.id = json['id']
 		self.owner = json['owner']['id']
+		self.name = json['name']
 		self.full_name = json['full_name']
 		self.url = json['url']
 		self.cloneUrl = json['clone_url']
