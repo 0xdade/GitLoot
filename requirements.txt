@@ -1,0 +1,4 @@
+GitPython==2.0.5
+requests==2.11.1
+argparse==1.2.1
+configparser==3.3.0.post2
