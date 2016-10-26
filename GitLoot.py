@@ -1,22 +1,14 @@
 from ConfigParser import ConfigParser
 import argparse
 import Map
+from setup import Setup
+import os
 #from models import *
 
 PROG_NAME = "GitLoot"
 PROG_VER = 0.1
 PROG_DESC = "Automatically perform analysis on repositories to look for valuable information."
 PROG_EPILOG = "You know how to do it now, go forth and loot and pillage."
-
-
-def loadConfig():
-	config = ConfigParser()
-	config.read("config.ini")
-	par=dict(config.items("api"))
-	for p in par:
-	    	par[p]=par[p].split("#",1)[0].strip() # To get rid of inline comments
-
-	globals().update(par)  #Make them availible globally
 
 def parseArgs():
 	parser = argparse.ArgumentParser(prog=PROG_NAME, description=PROG_DESC, epilog=PROG_EPILOG)
@@ -31,7 +23,11 @@ def parseArgs():
 	return args
 
 def main():
-	#loadConfig()
+	if not (os.path.isfile(os.path.expanduser('~') + "/.gitloot")):
+		# config not found, we need to prompt the user for config settings
+		setup = Setup()
+		print "Setup completed successfully. Please re-run GitLoot to begin."
+		raise SystemExit(0)
 	# We load the config first, and then read command line options. Command line can override options from the config at runtime.
 	#args = parseArgs()
 	#if args.job_subject:
@@ -39,10 +35,14 @@ def main():
 
 	
 	gh = Map.Map('github')
-	user = gh.getUser('0xdade')
-	org = gh.getOrganization('b0tchsec')
-	repo = gh.getRepository('0xdade', 'GitLoot')
-	print str(user) + "\n" + str(org) + "\n" + str(repo)
+	while True:
+		user = gh.getUser('0xdade')
+		print str(user) + "\n"
+		org = gh.getOrganization('b0tchsec')
+		print str(org) + "\n"
+		repo = gh.getRepository('0xdade/GitLoot')
+		print str(repo) + "\n"
+	#gh.getUsers()
 	#print "I guess we're done here. . ."
 	
 
