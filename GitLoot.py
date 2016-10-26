@@ -1,6 +1,7 @@
 from ConfigParser import ConfigParser
 import argparse
 import Map
+import Shovel
 from setup import Setup
 import os
 #from models import *
@@ -35,17 +36,25 @@ def main():
 
 	
 	gh = Map.Map('github')
+	shovel = Shovel.Shovel('git')
 	org = gh.getOrganization('b0tchsec')
-	print str(org) + "\n"
+	#myRepo = gh.getRepository('0xdade/GitLoot')
+	#print str(org) + "\n"
 	for rid,full_name in org.getRepos():
 		repo = gh.getRepository(full_name)
+		shovel.setRepo(repo)
+		shovel.clone()
+		shovel.cleanUp()
 		print str(repo) + "\n"		
 	
 	for uid,login in org.getMembers():
 		user = gh.getUser(login)
-		print str(user) + "\n"
+	#	print str(user) + "\n"
 		for rid,full_name in user.getRepos():
 			repo = gh.getRepository(full_name)
+			shovel.setRepo(repo)
+			shovel.clone()
+			shovel.cleanUp()
 			print str(repo) + "\n"
 	#gh.getUsers()
 	#print "I guess we're done here. . ."
