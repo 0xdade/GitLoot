@@ -2,6 +2,7 @@
 # Set persistent information in config
 from ConfigParser import ConfigParser
 import os
+import readline
 class Setup:
 
 	def __init__(self):
