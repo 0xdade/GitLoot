@@ -9,6 +9,7 @@ class Repository:
 		self.url = json['url']
 		self.cloneUrl = json['clone_url']
 		self.commits = deque()
+		self.headCommit = ""
 
 	def __str__(self):
-		return "Repository: " + str(self.id) + ", " + str(self.full_name)
+		return "Repository: " + str(self.id) + ", " + str(self.full_name) + ", " + str(self.headCommit)
