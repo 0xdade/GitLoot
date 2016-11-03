@@ -4,6 +4,7 @@ import Map
 import Shovel
 from setup import Setup
 import os
+import git
 #from models import *
 
 PROG_NAME = "GitLoot"
@@ -23,6 +24,15 @@ def parseArgs():
 	args = parser.parse_args()
 	return args
 
+def processTree(tree, count):
+	count = count
+	for item in tree:
+		if type(item) is git.objects.tree.Tree:
+			print "-"*count + "T: " + str(item)
+			processTree(item, count+1)
+		if type(item) is git.objects.blob.Blob:
+			print "-"*count + "B: " + str(item)
+
 def main():
 	if not (os.path.isfile(os.path.expanduser('~') + "/.gitloot")):
 		# config not found, we need to prompt the user for config settings
@@ -40,12 +50,12 @@ def main():
 	org = gh.getOrganization('b0tchsec')
 	#myRepo = gh.getRepository('0xdade/GitLoot')
 	#print str(org) + "\n"
-	for rid,full_name in org.getRepos():
-		repo = gh.getRepository(full_name)
-		shovel.setRepo(repo)
-		shovel.clone()
-		shovel.cleanUp()
-		print str(repo) + "\n"		
+	# for rid,full_name in org.getRepos():
+	# 	repo = gh.getRepository(full_name)
+	# 	shovel.setRepo(repo)
+	# 	shovel.clone()
+	# 	shovel.cleanUp()
+	# 	print str(repo) + "\n"		
 	
 	for uid,login in org.getMembers():
 		user = gh.getUser(login)
@@ -54,11 +64,14 @@ def main():
 			repo = gh.getRepository(full_name)
 			shovel.setRepo(repo)
 			shovel.clone()
-			shovel.cleanUp()
 			print str(repo) + "\n"
+			for commit in shovel.nextCommit():
+				print "\n"
+				print "#"*10 + "\nC: " + str(commit) + "\n" + "#"*10
+				processTree(commit.tree,1)
+			shovel.cleanUp()
 	#gh.getUsers()
 	#print "I guess we're done here. . ."
-	
 
 
 if __name__ == '__main__':
