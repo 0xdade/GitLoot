@@ -11,10 +11,17 @@ class Shovel:
 	
 	def cleanUp(self):
 		self._shovel.cleanUp()
-		
+
 	def clone(self):
 		#clone the repo locally so that we can interact with it
 		self._shovel.clone()
+
+	def getHeadCommit(self):
+		return self._shovel.getHeadCommit()
+
+	def printRepo(self):
+		self._shovel.printRepo()
+		return
 
 	def nextCommit(self):
 		#get the next commit for inspection
