@@ -2,6 +2,7 @@ from ConfigParser import ConfigParser
 import argparse
 import Map
 import Shovel
+import MetalDetector
 from setup import Setup
 import os
 import git
@@ -20,18 +21,9 @@ def parseArgs():
 	parser.add_argument("--api", nargs='?', dest="job_api", help="The root of the api you want to use for the input job. This overrides the default set in the config.")
 	parser.add_argument("--keys", nargs='?', dest="job_keys", help="An (optionally) comma separated list of api keys. A single key is fine for small jobs.")
 	parser.add_argument("--crate", nargs='?', dest="job_crate", help="Method of storage you want to use to store output from the job.")
-
+	parser.add_argument("--depth", dest="depth", default=1, help="Scan depth [Default 1]")
 	args = parser.parse_args()
 	return args
-
-def processTree(tree, count):
-	count = count
-	for item in tree:
-		if type(item) is git.objects.tree.Tree:
-			print "-"*count + "T: " + str(item)
-			processTree(item, count+1)
-		if type(item) is git.objects.blob.Blob:
-			print "-"*count + "B: " + str(item)
 
 def main():
 	if not (os.path.isfile(os.path.expanduser('~') + "/.gitloot")):
@@ -40,7 +32,7 @@ def main():
 		print "Setup completed successfully. Please re-run GitLoot to begin."
 		raise SystemExit(0)
 	# We load the config first, and then read command line options. Command line can override options from the config at runtime.
-	#args = parseArgs()
+	args = parseArgs()
 	#if args.job_subject:
 		#We need to add a job to the jobs crate so the prospector can find it.
 
@@ -48,6 +40,7 @@ def main():
 	gh = Map.Map('github')
 	shovel = Shovel.Shovel('git')
 	org = gh.getOrganization('b0tchsec')
+	md = MetalDetector.MetalDetector()
 	#myRepo = gh.getRepository('0xdade/GitLoot')
 	#print str(org) + "\n"
 	# for rid,full_name in org.getRepos():
@@ -64,11 +57,15 @@ def main():
 			repo = gh.getRepository(full_name)
 			shovel.setRepo(repo)
 			shovel.clone()
-			print str(repo) + "\n"
+			print "\n" + str(repo) + "\n"
+			commitCount = 0
 			for commit in shovel.nextCommit():
-				print "\n"
-				print "#"*10 + "\nC: " + str(commit) + "\n" + "#"*10
-				processTree(commit.tree,1)
+				if commitCount < args.depth:
+					md.processCommit(commit)
+					commitCount+=1
+				else:
+					break
+
 			shovel.cleanUp()
 	#gh.getUsers()
 	#print "I guess we're done here. . ."

@@ -1,0 +1,9 @@
+[
+	{
+		"part": "content",
+		"type": "match",
+		"pattern": "password=",
+		"caption": "Potential password",
+		"description": null
+	}
+]

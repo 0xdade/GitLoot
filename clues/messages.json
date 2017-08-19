@@ -1,2 +1,16 @@
 [
+	{
+		"part": "message",
+		"type": "match",
+		"pattern": "removed password",
+		"caption": "We might find a password near this commit",
+		"description": null
+	},
+	{
+		"part": "message",
+		"type": "match",
+		"pattern": "Ubuntu",
+		"caption": "I don't actually care about this",
+		"description": null
+	}
 ]
