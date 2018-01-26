@@ -12,4 +12,4 @@ class Repository:
 		self.headCommit = ""
 
 	def __str__(self):
-		return "Repository: " + str(self.id) + ", " + str(self.full_name) + ", " + str(self.headCommit)
+		return "Repository: " + str(self.full_name)
