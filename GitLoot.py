@@ -63,13 +63,13 @@ def scanUser(mmap,shovel,detector,target):
 		scanRepo(mmap,shovel,detector,full_name)
 
 def scanOrg(mmap,shovel,detector,target,members):
-	org = gh.getOrganization(target)
+	org = mmap.getOrganization(target)
 	repos = target.getRepos()
 	for rid,full_name in repos:
 		scanRepo(mmap,shovel,detector,full_name)
 	if members:
 		for uid,login in org.getMembers():
-			user = gh.getUser(login)
+			user = mmap.getUser(login)
 			scanUser(mmap,shovel,detector,user)
 
 
